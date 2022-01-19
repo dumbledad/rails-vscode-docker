@@ -9,3 +9,4 @@
   - https://guides.rubyonrails.org/command_line.html#rails-new
     - `--force`: Overwrite files that already exist
     - `--database`: Preconfigure for selected database (mysql/postgresql/sqlite3/oracle/sqlserver/jdbcmysql/jdbcsqlite3/jdbcpostgresql/jdbc)
+- https://docs.docker.com/compose/environment-variables/
