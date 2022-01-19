@@ -133,4 +133,8 @@ Now http://localhost:3000 should open the welcome page served by Rails from your
 
 ## Adding Rails functionality
 
-First run through [Getting Started with Rails](https://guides.rubyonrails.org/getting_started.html) to add functionality to the vanilla Rails app so that you have something to debug.
+Run through [Getting Started with Rails](https://guides.rubyonrails.org/getting_started.html) to add functionality to the vanilla Rails app so that you have something to debug.
+
+## Debuging with Visual Studio Code
+
+Note that the [Ruby on Rails debugging in VS Code](https://github.com/Microsoft/vscode-recipes/tree/master/debugging-Ruby-on-Rails) recipe on GitHub is about debuging on your local machine, not in Docker containers.
