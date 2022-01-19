@@ -49,7 +49,6 @@ exec "$@"
 
 We will use `docker compose` to build and run the containers. This is our `docker-compose.yml`
 ```yaml
----
 version: '3.8'
 
 services:
