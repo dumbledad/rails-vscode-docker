@@ -89,13 +89,45 @@ Now we can run Rails to set up a skeleton app, using [`docker compose run`](http
 docker compose run --no-deps web rails new . --force --database=postgresql
 ```
 The `--no-deps` option means that only the container called _app_ is started, not those it depends on. That's the one with Rails in so `rails new . --force --database=postgresql` is executed in that container. (N.B. `--force` overwrites any files that already exist.)
-## Log
 
-- 
-- `docker compose run --no-deps app rails new . --force --database=postgresql`
-  - https://docs.docker.com/compose/reference/run/
-    - `--no-deps`: Don't start linked services 
-  - https://guides.rubyonrails.org/command_line.html#rails-new
-    - `--force`: Overwrite files that already exist
-    - `--database`: Preconfigure for selected database (mysql/postgresql/sqlite3/oracle/sqlserver/jdbcmysql/jdbcsqlite3/jdbcpostgresql/jdbc)
-- https://docs.docker.com/compose/environment-variables/
+This produces lots of new files. The [quickstart](https://docs.docker.com/samples/rails/) I am cribbing from here explains what to do if these new files are all owned by _root_.
+
+Now we can build the containers.
+```bash
+docker compose build
+```
+
+Before we can finally run the site we need to create the database. First we need to configure Postgres to use the username and password we supplied as environment variables in our containers using our `.env` file. We replace `config/database.yml` with this:
+```yaml
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: db
+  username: <%= ENV.fetch('POSTGRES_USER', 'postgres') %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', 'password') %>
+  pool: 5
+
+development:
+  <<: *default
+  database: app_development
+
+test:
+  <<: *default
+  database: app_test
+```
+
+Now we can start the containers
+```bash
+docker compose up
+```
+
+We still need to create the database before we can view the vanilla page Rails created for us. You could run the command on a new instance of the _app_ container, but I prefer to use the one brought up by `docker compose run`. First find its name by running `docker ps` and then open a bash shell in that container:
+```bash
+docker exec --interactive --tty rails-vscode-docker-app-1 bash
+```
+(The options to `docker exec` are explained in [the manual page](https://docs.docker.com/engine/reference/commandline/exec/).) At that bash prompt we can make the new database by running
+```bash
+rails db:create
+```
+
+Now http://localhost:3000 should open the welcome page served by Rails from your _app_ container.
