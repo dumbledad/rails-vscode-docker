@@ -85,7 +85,7 @@ POSTGRES_PASSWORD=password
 
 Now we can run Rails to set up a skeleton app, using [`docker compose run`](https://docs.docker.com/compose/reference/run/):
 ```bash
-docker compose run --no-deps web rails new . --force --database=postgresql
+docker compose run --no-deps app rails new . --force --database=postgresql
 ```
 The `--no-deps` option means that only the container called _app_ is started, not those it depends on. That's the one with Rails in so `rails new . --force --database=postgresql` is executed in that container. (N.B. `--force` overwrites any files that already exist.)
 
