@@ -130,3 +130,7 @@ rails db:create
 ```
 
 Now http://localhost:3000 should open the welcome page served by Rails from your _app_ container.
+
+## Adding Rails functionality
+
+First run through [Getting Started with Rails](https://guides.rubyonrails.org/getting_started.html) to add functionality to the vanilla Rails app so that you have something to debug.
