@@ -8,5 +8,11 @@ set -e
 # Remove a potentially pre-existing server.pid for Rails.
 rm -f /app/tmp/pids/server.pid
 
-# Then exec the container's main process (what's set as CMD in the Dockerfile).
-exec "$@"
+# Set variables
+HOST=0.0.0.0
+PORT=3000
+DEBUG_PORT=1234
+DISPATCHER_PORT=26162
+
+# Start the debugging session for the Rails app
+rdebug-ide --debug --host $HOST --port $DEBUG_PORT --dispatcher-port $DISPATCHER_PORT -- ./bin/rails server --bind $HOST --port $PORT

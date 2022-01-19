@@ -18,7 +18,9 @@ services:
     volumes:
       - .:/app
     ports:
+      - "1234:1234"
       - "3000:3000"
+      - "26162:26162"
     depends_on:
       - db
     environment:

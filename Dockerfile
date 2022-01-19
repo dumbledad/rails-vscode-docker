@@ -1,4 +1,4 @@
-FROM ruby:3.1
+FROM ruby:3.0
 RUN apt update
 RUN apt upgrade --yes
 RUN apt install --yes nodejs postgresql-client
@@ -11,6 +11,5 @@ COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
-
-# Configure the main process to run when running the image
-CMD ["rails", "server", "-b", "0.0.0.0"]
+EXPOSE 1234
+EXPOSE 26162
