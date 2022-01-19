@@ -137,4 +137,5 @@ Run through [Getting Started with Rails](https://guides.rubyonrails.org/getting_
 
 ## Debuging with Visual Studio Code
 
-Note that the [Ruby on Rails debugging in VS Code](https://github.com/Microsoft/vscode-recipes/tree/master/debugging-Ruby-on-Rails) recipe on GitHub is about debuging on your local machine, not in Docker containers.
+The [Ruby on Rails debugging in VS Code](https://github.com/Microsoft/vscode-recipes/tree/master/debugging-Ruby-on-Rails) recipe on GitHub is about debuging on your local machine, not in Docker containers, but in the [Bonus](https://github.com/Microsoft/vscode-recipes/tree/master/debugging-Ruby-on-Rails#bonus) content goes on to cover Docker.
+
