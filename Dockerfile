@@ -1,4 +1,4 @@
-FROM ruby:3.1-bullseye
+FROM ruby:3.1
 RUN apt update
 RUN apt upgrade --yes
 RUN apt install --yes nodejs postgresql-client
