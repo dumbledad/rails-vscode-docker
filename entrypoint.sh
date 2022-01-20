@@ -14,5 +14,12 @@ PORT=3000
 DEBUG_PORT=1234
 DISPATCHER_PORT=26162
 
-# Start the debugging session for the Rails app
-rdebug-ide --debug --host $HOST --port $DEBUG_PORT --dispatcher-port $DISPATCHER_PORT -- ./bin/rails server --bind $HOST --port $PORT
+# Start the debugging session for the Rails app if required
+if [ ${RDEBUG_IDE:-0} -eq 1 ]
+then
+    echo "Starting rails server under rdebug-ide"
+    rdebug-ide --skip_wait_for_start --host $HOST --port $DEBUG_PORT --dispatcher-port $DISPATCHER_PORT -- rails server --binding $HOST --port $PORT
+else
+    echo "Starting rails server without rdebug-ide"
+    rails server --binding $HOST --port $PORT
+fi
