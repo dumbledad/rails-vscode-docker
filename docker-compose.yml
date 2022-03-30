@@ -29,4 +29,4 @@ services:
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
-      - RDEBUG_IDE=1
+      - RDEBUG_IDE
