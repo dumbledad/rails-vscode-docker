@@ -50,3 +50,24 @@ N.B. The [Dockerfile](Dockerfile) needs to expose the same ports, e.g.
     EXPOSE 3000
     EXPOSE 1234
     EXPOSE 26162
+
+### Problems
+
+The Rails app starts without waiting for the debugger. Interestingly I can see this in the app log:
+
+> Starting rails server without rdebug-ide  
+
+That comes from the [entrypoint.sh](entrypoint.sh) file:
+
+    if [ ${RDEBUG_IDE:-0} -eq 1 ]
+    then
+        echo "Starting rails server under rdebug-ide"
+        rdebug-ide --skip_wait_for_start --host $HOST --port $DEBUG_PORT --dispatcher-port $DISPATCHER_PORT -- rails server --binding $HOST --port $PORT
+    else
+        echo "Starting rails server without rdebug-ide"
+        rails server --binding $HOST --port $PORT
+    fi
+
+but in my .env file I have 
+
+    RDEBUG_IDE=1
