@@ -14,7 +14,8 @@ services:
     build: .
     command: >
       bash -c "rm -f tmp/pids/server.pid && 
-      bundle exec rails server --port=3000 --binding='0.0.0.0'"
+      # bundle exec rails server --port=3000 --binding='0.0.0.0'"
+      bundle exec rdebug-ide --debug --host 0.0.0.0 --port 1234 -- rails s -p 3000 -b 0.0.0.0
     volumes:
       - .:/app
     ports:
