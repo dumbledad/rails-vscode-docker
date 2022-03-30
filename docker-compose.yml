@@ -12,12 +12,6 @@ services:
 
   app:
     build: .
-    # command: >
-    #   # bash -c "rm -f tmp/pids/server.pid && 
-    #   # echo "***** Starting rails server under rdebug-ide *****" && 
-    #   # bundle exec rails server --port=3000 --binding='0.0.0.0'"
-    #   # bundle exec rdebug-ide --debug --host 0.0.0.0 --port 1234 -- rails s -p 3000 -b 0.0.0.0
-    #   # bundle exec rdebug-ide --skip_wait_for_start --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- rails server --binding 0.0.0.0 --port 3000
     volumes:
       - .:/app
     ports:
