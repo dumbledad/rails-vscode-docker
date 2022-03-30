@@ -2,7 +2,7 @@
 
 ## Simple Rails in Docker
 
-To get a simple vanilla Rails app up and running in a Docker container on your local manchine follow [these instructions](SimpleRailsInDocker.md)
+To get a simple vanilla Rails app up and running in a Docker container on your local machine follow [these instructions](SimpleRailsInDocker.md)
 
 ## Debuging with Visual Studio Code
 
