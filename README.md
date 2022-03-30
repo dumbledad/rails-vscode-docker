@@ -25,49 +25,51 @@ Add a configuration like this:
 
 ### The matching changes to your [docker-compose.yml](docker-compose.yml) and [Dockerfile](Dockerfile) files
 
-The port number in your [.vscode/launch.json](.vscode/launch.json) file will need to match the one specified in your [docker-compose.yml](docker-compose.yml) file. You will also need to make rails available for debugging, i.e. 
+The port number in your [.vscode/launch.json](.vscode/launch.json) file will need to match the one specified in your [docker-compose.yml](docker-compose.yml) file. You will also need to make rails available for debugging and the [Dockerfile](Dockerfile) needs to expose the same ports.
 
-    app:
-      build: .
-      command: >
-        bash -c "rm -f tmp/pids/server.pid && 
-        # bundle exec rails server --port=3000 --binding='0.0.0.0'"
-        bundle exec rdebug-ide --debug --host 0.0.0.0 --port 1234 -- rails s -p 3000 -b 0.0.0.0
-      volumes:
-        - .:/app
-      ports:
-        - "1234:1234"
-        - "3000:3000"
-        - "26162:26162"
-      depends_on:
-        - db
-      environment:
-        - POSTGRES_USER
-        - POSTGRES_PASSWORD
+Between your [docker-compose.yml](docker-compose.yml) and [Dockerfile](Dockerfile) files you need to run the Rails server from `rdebug-ide`. For example:
 
-N.B. The [Dockerfile](Dockerfile) needs to expose the same ports, e.g.
+#### Included in a [docker-compose.yml](docker-compose.yml) file
+
+  app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "1234:1234"
+      - "3000:3000"
+      - "26162:26162"
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - RDEBUG_IDE
+
+#### Included in a  [Dockerfile](Dockerfile)
 
     EXPOSE 3000
     EXPOSE 1234
     EXPOSE 26162
 
-### Problems
+    COPY entrypoint.sh /usr/bin/
+    RUN chmod +x /usr/bin/entrypoint.sh
+    ENTRYPOINT ["entrypoint.sh"]
 
-The Rails app starts without waiting for the debugger. Interestingly I can see this in the app log:
+#### Included in the an [entrypoint.sh](entrypoint.sh) file
 
-> Starting rails server without rdebug-ide  
-
-That comes from the [entrypoint.sh](entrypoint.sh) file:
+    HOST=0.0.0.0
+    PORT=3000
+    DEBUG_PORT=1234
+    DISPATCHER_PORT=26162
 
     if [ ${RDEBUG_IDE:-0} -eq 1 ]
     then
         echo "Starting rails server under rdebug-ide"
-        rdebug-ide --skip_wait_for_start --host $HOST --port $DEBUG_PORT --dispatcher-port $DISPATCHER_PORT -- rails server --binding $HOST --port $PORT
+        rdebug-ide --skip_wait_for_start --host $HOST --port $DEBUG_PORT --dispatcher-port $DISPATCHER_PORT -- ./bin/rails server --binding $HOST --port $PORT
     else
         echo "Starting rails server without rdebug-ide"
         rails server --binding $HOST --port $PORT
     fi
 
-but in my .env file I have 
-
-    RDEBUG_IDE=1
+At that point you can set `RDEBUG_IDE` to `1` in your `.env` file (based on [[.env.example](.env.example)), run the container with `docker compose up`, and connect to the container in VSCode, setting breakpoints etc.
