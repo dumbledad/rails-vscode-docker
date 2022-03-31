@@ -72,4 +72,4 @@ Between your [docker-compose.yml](docker-compose.yml) and [Dockerfile](Dockerfil
         rails server --binding $HOST --port $PORT
     fi
 
-At that point you can set `RDEBUG_IDE` to `1` in your `.env` file (based on [[.env.example](.env.example)), run the container with `docker compose up`, and connect to the container in VSCode, setting breakpoints etc.
+At that point you can set `RDEBUG_IDE` to `1` in your `.env` file (based on [.env.example](.env.example)), run the container with `docker compose up`, and connect to the container in VSCode, setting breakpoints etc.
