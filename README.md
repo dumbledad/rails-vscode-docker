@@ -31,20 +31,20 @@ Between your [docker-compose.yml](docker-compose.yml) and [Dockerfile](Dockerfil
 
 #### Included in a [docker-compose.yml](docker-compose.yml) file
 
-  app:
-    build: .
-    volumes:
-      - .:/app
-    ports:
-      - "1234:1234"
-      - "3000:3000"
-      - "26162:26162"
-    depends_on:
-      - db
-    environment:
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - RDEBUG_IDE
+    app:
+      build: .
+      volumes:
+        - .:/app
+      ports:
+        - "1234:1234"
+        - "3000:3000"
+        - "26162:26162"
+      depends_on:
+        - db
+      environment:
+        - POSTGRES_USER
+        - POSTGRES_PASSWORD
+        - RDEBUG_IDE
 
 #### Included in a  [Dockerfile](Dockerfile)
 
